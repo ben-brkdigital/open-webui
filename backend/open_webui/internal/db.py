@@ -51,6 +51,9 @@ class JSONField(types.TypeDecorator):
 # Workaround to handle the peewee migration
 # This is required to ensure the peewee migration is handled before the alembic migration
 def handle_peewee_migration(DATABASE_URL):
+    if 'sqlite' not in DATABASE_URL:
+        log.info('Skipping Peewee migration for non-SQLite database.')
+        return
     db = None
     try:
         # Replace the postgresql:// with postgres:// to handle the peewee migration
