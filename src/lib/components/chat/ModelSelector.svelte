@@ -48,10 +48,10 @@
 <div class="flex flex-col w-full items-start">
 	{#each selectedModels as selectedModel, selectedModelIdx}
 		<div class="flex w-full max-w-fit">
-			<div class="overflow-hidden w-full">
+			{#if selectedModelIdx === 0}
 				<div class="mr-1 max-w-full">
 					<Selector
-						id={`${selectedModelIdx}`}
+						id="0"
 						placeholder={$i18n.t('Select a model')}
 						items={$models.map((model) => ({
 							value: model.id,
@@ -66,7 +66,7 @@
 						bind:value={selectedModel}
 					/>
 				</div>
-			</div>
+			{/if}
 
 			{#if $user?.role === 'admin' || ($user?.permissions?.chat?.multiple_models ?? true)}
 				{#if selectedModelIdx === 0}
