@@ -45,31 +45,35 @@
 	}
 </script>
 
-<div class="flex flex-col w-full items-start">
-	{#each selectedModels as selectedModel, selectedModelIdx}
-		{#if selectedModelIdx === 0}
-			<div class="flex w-full max-w-fit">
-				<div class="mr-1 max-w-full">
-					<Selector
-						id="0"
-						placeholder={$i18n.t('Select a model')}
-						items={$models.map((model) => ({
-							value: model.id,
-							label: model.name,
-							model: model
-						}))}
-						showTemporaryChatControl={$user?.role === 'user'
-							? ($user?.permissions?.chat?.temporary ?? true) &&
-								!($user?.permissions?.chat?.temporary_enforced ?? false)
-							: true}
-						{pinModelHandler}
-						bind:value={selectedModel}
-					/>
+{#if $user === undefined}
+  <!-- Optionally show a loading spinner or nothing -->
+{:else}
+	<div class="flex flex-col w-full items-start">
+		{#each selectedModels as selectedModel, selectedModelIdx}
+			{#if selectedModelIdx === 0}
+				<div class="flex w-full max-w-fit">
+					<div class="mr-1 max-w-full">
+						<Selector
+							id="0"
+							placeholder={$i18n.t('Select a model')}
+							items={$models.map((model) => ({
+								value: model.id,
+								label: model.name,
+								model: model
+							}))}
+							showTemporaryChatControl={$user?.role === 'user'
+								? ($user?.permissions?.chat?.temporary ?? true) &&
+									!($user?.permissions?.chat?.temporary_enforced ?? false)
+								: true}
+							{pinModelHandler}
+							bind:value={selectedModel}
+						/>
+					</div>
 				</div>
-			</div>
-		{/if}
-	{/each}
-</div>
+			{/if}
+		{/each}
+	</div>
+{/if}
 
 {#if showSetDefault}
 	<div
